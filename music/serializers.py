@@ -4,16 +4,16 @@ from .models import Artist, Albom, Songs
 class ArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
-        fields = ("name", "image")
+        fields = "__all__"
 
 class AlbomSerializer(serializers.ModelSerializer):
-    artist = ArtistSerializer()
+    artist = ArtistSerializer(read_only=True)
     class Meta:
         model = Albom
-        fields = ("title", "cover", "artist")
+        fields = "__all__"
 
 class SongsSerializer(serializers.ModelSerializer):
-    albom = AlbomSerializer()
+    albom = AlbomSerializer(read_only=True)
     class Meta:
         model = Songs
-        fields = ("title", "cover", "albom")
+        fields = "__all__"

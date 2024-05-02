@@ -1,9 +1,14 @@
-from django.urls import path
-from .views import LandingPageAPIView, ArtistAPIView, AlbomAPIView, SongsAPIView
+from django.urls import path, include
+from .views import ArtistAPIView, SongsAPIView, SongDetailAPIView, AlbomAPIViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('alboms', viewset=AlbomAPIViewSet)
+
 
 urlpatterns = [
-    path("landing/", LandingPageAPIView.as_view(), name="landing"),
     path("artists/", ArtistAPIView.as_view(), name="artist"),
-    path("alboms/", AlbomAPIView.as_view(), name="albom"),
-    path("songs/", SongsAPIView.as_view(), name="songs")
+    path("", include(router.urls)),
+    path("songs/", SongsAPIView.as_view(), name="songs"),
+    path("songs/<int:id>/", SongDetailAPIView.as_view(), name="song-detail")
 ]
